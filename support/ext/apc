@@ -5,7 +5,7 @@ apc_version="3.1.9"
 curl -L "http://pecl.php.net/get/APC-/${apc_version}.tgz" \
     | tar xzv
 
-cd APC-${mongo_version}
+cd APC-${apc_version}
 /app/vendor/php/bin/phpize
 ./configure --with-php-config=/app/vendor/php/bin/php-config \
             --enable-apc --enable-apc-debug

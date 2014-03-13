@@ -269,6 +269,7 @@ PHP_INCLUDES=
 COMPILE_CMD=
 NGINX_INCLUDES=
 NEWRELIC_VERSION=4.0.5.18
+MEMCACHED_VERSION=1.4.17
 
 # Read config variables from composer.json if it exists
 if [ -f "$BUILD_DIR/composer.json" ]; then
@@ -303,11 +304,15 @@ fi
 
 VENDORED_NGINX=/app/vendor/nginx
 VENDORED_PHP=/app/vendor/php
+VENDORED_MEMCACHED=/app/vendor/memcached
 
 [ ! -d "$BUILD_DIR/vendor" ] && mkdir -p "$BUILD_DIR/vendor"
 
 status "Bundling NGINX ${NGINX_VERSION}"
 fetch_engine_package nginx "$NGINX_VERSION" /app/vendor/nginx | indent
+
+status "Bundling MEMCACHED ${MEMCACHED_VERSION}"
+fetch_engine_package memcached "$MEMCACHED_VERSION" /app/vendor/memcached | indent
 
 status "Bundling PHP ${PHP_VERSION}"
 
@@ -322,25 +327,19 @@ fetch_engine_package php "$PHP_VERSION" /app/vendor/php | indent
 test ! -d ".profile.d" && mkdir -p .profile.d || true
 
 cat > ".profile.d/php.sh" <<SH
-export PATH=/sbin:/bin:/usr/sbin:/usr/bin:/app/bin:/app/vendor/nginx/sbin:/app/vendor/php/sbin:/app/vendor/php/bin:/app/vendor/bin:\$PATH
+export PATH=/sbin:/bin:/usr/sbin:/usr/bin:/app/bin:/app/vendor/nginx/sbin:/app/vendor/php/sbin:/app/vendor/php/bin:/app/vendor/memcached/bin:/app/vendor/bin:\$PATH
 SH
 
 source ".profile.d/php.sh"
 
 # Fetch additional extensions
 status "Bundling extensions"
-echo "       phpredis"
-fetch_package "ext/$(php_api_version)/php-redis" "/app/vendor/php" | indent
-echo "       mongo"
-fetch_package "ext/$(php_api_version)/php-mongo" "/app/vendor/php" | indent
 echo "       apc"
 fetch_package "ext/$(php_api_version)/php-apc" "/app/vendor/php" | indent
 echo "       memcached"
 fetch_package "ext/$(php_api_version)/php-memcached" "/app/vendor/php" | indent
 echo "       phalcon"
 fetch_package "ext/$(php_api_version)/php-phalcon" "/app/vendor/php" | indent
-echo "       xdebug"
-fetch_package "ext/$(php_api_version)/php-xdebug" "/app/vendor/php" | indent
 
 if [ -f "$BUILD_DIR/composer.json" ] && package_newrelic_enabled; then
     install_newrelic "$NEWRELIC_VERSION"
@@ -413,6 +412,7 @@ mv /app/vendor/libmcrypt vendor/libmcrypt
 mv /app/vendor/libicu vendor/libicu
 mv /app/vendor/nginx vendor/nginx
 mv /app/vendor/php vendor/php
+mv /app/vendor/memcached vendor/memcached
 
 mkdir -p "bin"
 
@@ -454,13 +454,19 @@ touch /app/vendor/php/var/log/error.log
 )&
 
 (
-    php-fpm -p "/app/vendor/php"
+    exec php-fpm -p "/app/vendor/php"
     \$pmsgr < "php-fpm"
 )&
 
 (
-    nginx -p "/app/vendor/nginx" -c /app/vendor/nginx/conf/nginx.conf
+    exec nginx -p "/app/vendor/nginx" -c /app/vendor/nginx/conf/nginx.conf
     \$pmsgr < "nginx"
+)&
+
+(
+    echo "Starting memcached service"
+    exec /app/vendor/memcached/bin/memcached -l 0.0.0.0
+#    \$pmsgr < "memcached"
 )&
 
 read exitproc <\$pmsgr
