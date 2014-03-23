@@ -340,6 +340,8 @@ echo "       memcached"
 fetch_package "ext/$(php_api_version)/php-memcached" "/app/vendor/php" | indent
 echo "       phalcon"
 fetch_package "ext/$(php_api_version)/php-phalcon" "/app/vendor/php" | indent
+echo "       xdebug"
+fetch_package "ext/$(php_api_version)/php-xdebug" "/app/vendor/php" | indent
 
 if [ -f "$BUILD_DIR/composer.json" ] && package_newrelic_enabled; then
     install_newrelic "$NEWRELIC_VERSION"
