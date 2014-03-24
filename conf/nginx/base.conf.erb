@@ -30,14 +30,6 @@ http {
 
     include mime.types;
 
-    server {
-        server_name localhost;
-        listen <%= ENV['PORT'] %>;
+    include site.conf;
 
-        include site.conf;
-
-        <% Shellwords.split(ENV['NGINX_INCLUDES'].to_s).each do |f| %>
-        include /app/<%= f %>;
-        <% end %>
-    }
 }
