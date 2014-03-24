@@ -213,6 +213,10 @@ function package_framework() {
     jq --raw-output '.extra.heroku.framework // ""' < "$BUILD_DIR/composer.json"
 }
 
+function package_environment() {
+    jq --raw-output '.extra.heroku.environment // ""' < "$BUILD_DIR/composer.json"
+}
+
 function package_nginx_version() {
     jq --raw-output ".extra.heroku.engines.nginx // \"default\"" < "$BUILD_DIR/composer.json"
 }
@@ -264,6 +268,7 @@ NGINX_VERSION="default"
 DOCUMENT_ROOT=
 INDEX_DOCUMENT="index.php"
 FRAMEWORK=
+ENVIRONMENT=
 PHP_EXTRA_CONFIG=
 PHP_INCLUDES=
 COMPILE_CMD=
@@ -278,6 +283,7 @@ if [ -f "$BUILD_DIR/composer.json" ]; then
     DOCUMENT_ROOT=$(package_document_root)
     INDEX_DOCUMENT=$(package_index_file)
     FRAMEWORK=$(package_framework)
+    ENVIRONMENT=$(package_environment)
     PHP_EXTRA_CONFIG=$(package_php_config)
     PHP_INCLUDES=$(package_php_includes)
     COMPILE_CMD=$(package_compile_cmd)
