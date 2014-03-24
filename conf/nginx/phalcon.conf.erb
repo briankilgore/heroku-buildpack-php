@@ -1,24 +1,29 @@
 #phalcon.conf.erb
 
-root /app/<%= ENV['DOCUMENT_ROOT'] %>;
+server {
+    server_name localhost;
+    listen <%= ENV['PORT'] %>;
 
-#all other locations try other files first and go to our front controller if none of them exists
-location /api {
-    rewrite /api(.*)$ /api/router.php?_url=$1 last;
-}
+    root /app/<%= ENV['DOCUMENT_ROOT'] %>;
 
-#return 404 for all php files as we do have a front controller
-location ~ /api/(?!router.php)(.*)\.php$ {
-    return 404;
-}
+    #all other locations try other files first and go to our front controller if none of them exists
+    location /api {
+        rewrite /api(.*)$ /api/router.php?_url=$1 last;
+    }
 
-location ~ \.php {
-    fastcgi_pass php;
-    include fastcgi_params;
-    fastcgi_buffers 256 4k;
-    fastcgi_index index.php;
-    fastcgi_intercept_errors on;
-    fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;
-    #uncomment when running via https
-    #fastcgi_param HTTPS on;
+    #return 404 for all php files as we do have a front controller
+    location ~ /api/(?!router.php)(.*)\.php$ {
+        return 404;
+    }
+
+    location ~ \.php {
+        fastcgi_pass php;
+        include fastcgi_params;
+        fastcgi_buffers 256 4k;
+        fastcgi_index index.php;
+        fastcgi_intercept_errors on;
+        fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;
+        #uncomment when running via https
+        #fastcgi_param HTTPS on;
+    }
 }
