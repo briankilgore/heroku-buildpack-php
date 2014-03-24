@@ -2,7 +2,7 @@
 
 server {
     server_name localhost;
-    listen <%= ENV['PORT'] %>;
+    listen 80;
 
     root /app/api;
 
@@ -27,8 +27,5 @@ server {
         #fastcgi_param HTTPS on;
     }
 
-    <% Shellwords.split(ENV['NGINX_INCLUDES'].to_s).each do |f| %>
-    include /app/<%= f %>;
-    <% end %>
 }
 
