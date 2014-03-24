@@ -7,8 +7,8 @@ function sets_framework_phalcon() {
     [ $(jq --raw-output '.extra.heroku.framework' < "$BUILD_DIR/composer.json") == "phalcon" ]
 }
 
-function production_deployment_environment() {
-    [ $(jq --raw-output '.extra.heroku.environment' < "$BUILD_DIR/composer.json") == "production" ]
+function deployment_environment() {
+    jq --raw-output '.extra.heroku.environment // ""' < "$BUILD_DIR/composer.json"
 }
 
 case "$1" in
@@ -26,7 +26,7 @@ case "$1" in
         ;;
     compile)
         echo "-----> Setting up Phalcon app"
-	if production_deployment_environment; then
+	if [ $(deployment_environment) == "production" ]; then
 	    cp "$basedir/../conf/nginx/phalcon.production.conf.erb" "$BUILD_DIR/conf/site.conf.erb"
 	else
             cp "$basedir/../conf/nginx/phalcon.conf.erb" "$BUILD_DIR/conf/site.conf.erb"
