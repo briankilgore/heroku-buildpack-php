@@ -2,7 +2,7 @@
 
 server {
     server_name localhost;
-    listen 80;
+    listen <%= ENV['PORT'] %>;
 
     root /app/api;
 
