@@ -1,6 +1,26 @@
 #phalcon.production.conf.erb
 
 server {
+    server_name localhost;
+    listen <%= ENV['PORT'] %>;
+
+    root /app;
+    index index.php;
+
+    location ~ \.php {
+        fastcgi_pass php;
+        include fastcgi_params;
+        fastcgi_buffers 256 4k;
+        fastcgi_index index.php;
+        fastcgi_intercept_errors on;
+        fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;
+        #uncomment when running via https
+        #fastcgi_param HTTPS on;
+    }
+
+}
+
+server {
     server_name api.intensityorchestrate.com;
     listen <%= ENV['PORT'] %>;
 
