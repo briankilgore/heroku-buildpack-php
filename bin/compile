@@ -326,7 +326,7 @@ status "Bundling PHP ${PHP_VERSION}"
 # dynamic libraries when running it during the slug compilation.
 fetch_package "libicu-51" /app/vendor/libicu > /dev/null
 fetch_package "libmcrypt-${MCRYPT_VERSION}" /app/vendor/libmcrypt > /dev/null
-fetch_package "libmemcached-1.0.15" /app/vendor/libmemcached > /dev/null
+fetch_package "libmemcached-1.0.18" /app/vendor/libmemcached > /dev/null
 
 fetch_engine_package php "$PHP_VERSION" /app/vendor/php | indent
 
