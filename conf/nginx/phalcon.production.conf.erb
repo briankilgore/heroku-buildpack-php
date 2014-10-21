@@ -1,6 +1,36 @@
 #phalcon.production.conf.erb
 
 server {
+    server_name api.intensityorchestrate.com;
+    listen <%= ENV['PORT'] %>;
+
+    root /app/api;
+
+    #all other locations try other files first and go to our front controller if none of them exists
+    location / {
+        rewrite (.*)$ /router.php?_url=$1 last;
+    }
+
+    #return 404 for all php files as we do have a front controller
+    location ~ /(?!router.php)(.*)\.php$ {
+        return 404;
+    }
+
+    location ~ \.php {
+        fastcgi_pass php;
+        #fastcgi_pass unix:/tmp/php-fpm.api1.sock;
+        include fastcgi_params;
+        fastcgi_buffers 256 4k;
+        fastcgi_index index.php;
+        fastcgi_intercept_errors on;
+        fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;
+        #uncomment when running via https
+        #fastcgi_param HTTPS on;
+    }
+
+}
+
+server {
     server_name api1.intensityorchestrate.com;
     listen <%= ENV['PORT'] %>;
 
