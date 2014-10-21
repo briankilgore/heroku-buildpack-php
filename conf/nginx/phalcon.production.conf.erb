@@ -1,16 +1,37 @@
 #phalcon.production.conf.erb
 
 server {
-    server_name auth;
+    server_name api1;
     listen <%= ENV['PORT'] %>;
 
-    root /app;
-    index auth.html;
+    root /app/api1;
+
+    #all other locations try other files first and go to our front controller if none of them exists
+    location / {
+        rewrite (.*)$ /router.php?_url=$1 last;
+    }
+
+    #return 404 for all php files as we do have a front controller
+    location ~ /(?!router.php)(.*)\.php$ {
+        return 404;
+    }
+
+    location ~ \.php {
+        #fastcgi_pass php;
+	fastcgi_pass server unix:/tmp/php-fpm.api1.sock max_fails=3 fail_timeout=3s;
+        include fastcgi_params;
+        fastcgi_buffers 256 4k;
+        fastcgi_index index.php;
+        fastcgi_intercept_errors on;
+        fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;
+        #uncomment when running via https
+        #fastcgi_param HTTPS on;
+    }
 
 }
 
 server {
-    server_name api.intensityorchestrate.com;
+    server_name api2;
     listen <%= ENV['PORT'] %>;
 
     root /app/api;
@@ -26,7 +47,8 @@ server {
     }
 
     location ~ \.php {
-        fastcgi_pass php;
+        #fastcgi_pass php;
+	fastcgi_pass server unix:/tmp/php-fpm.api2.sock max_fails=3 fail_timeout=3s;
         include fastcgi_params;
         fastcgi_buffers 256 4k;
         fastcgi_index index.php;
@@ -38,22 +60,3 @@ server {
 
 }
 
-server {
-    server_name dashboard.intensityorchestrate.com;
-    listen <%= ENV['PORT'] %>;
-
-    root /app/dashboard;
-    index index.html index.php;
-
-    location ~ \.php {
-        fastcgi_pass php;
-        include fastcgi_params;
-        fastcgi_buffers 256 4k;
-        fastcgi_index index.php;
-        fastcgi_intercept_errors on;
-        fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;
-        #uncomment when running via https
-        #fastcgi_param HTTPS on;
-    }
-
-}
