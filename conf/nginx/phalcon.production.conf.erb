@@ -1,7 +1,7 @@
 #phalcon.production.conf.erb
 
 server {
-    server_name api1;
+    server_name api1.intensityorchestrate.com;
     listen <%= ENV['PORT'] %>;
 
     root /app/api;
@@ -31,7 +31,7 @@ server {
 }
 
 server {
-    server_name api2;
+    server_name api2.intensityorchestrate.com;
     listen <%= ENV['PORT'] %>;
 
     root /app/api;
