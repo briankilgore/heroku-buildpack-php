@@ -46,9 +46,16 @@ server {
         return 404;
     }
 
+    location ~ ^/(status|ping)$ {
+        access_log off;
+        include fastcgi_params;
+	#fastcgi_pass unix:/tmp/php-fpm.api1.sock;
+	fastcgi_pass php-fpm-api1;
+    }
+
     location ~ \.php {
-        #fastcgi_pass php;
-	fastcgi_pass unix:/tmp/php-fpm.api1.sock;
+        fastcgi_pass php-fpm-api1;
+	#fastcgi_pass unix:/tmp/php-fpm.api1.sock;
         include fastcgi_params;
         fastcgi_buffers 256 4k;
         fastcgi_index index.php;
@@ -76,9 +83,16 @@ server {
         return 404;
     }
 
+    location ~ ^/(status|ping)$ {
+        access_log off;
+        include fastcgi_params;
+        #fastcgi_pass unix:/tmp/php-fpm.api1.sock
+	fastcgi_pass php-fpm-api2;
+    }
+
     location ~ \.php {
-        #fastcgi_pass php;
-	fastcgi_pass unix:/tmp/php-fpm.api2.sock;
+        fastcgi_pass php-fpm-api2;
+	#fastcgi_pass unix:/tmp/php-fpm.api2.sock;
         include fastcgi_params;
         fastcgi_buffers 256 4k;
         fastcgi_index index.php;

@@ -22,6 +22,14 @@ http {
         #keepalive 16;
     }
 
+    upstream php-fpm-api1 {
+	server unix:/tmp/php-fpm.api1.sock max_fails=3 fail_timeout=3s;
+    }
+
+    upstream php-fpm-api2 {
+        server unix:/tmp/php-fpm.api2.sock max_fails=3 fail_timeout=3s;
+    }
+
     <% if ENV.has_key? "INDEX_DOCUMENT" and ENV['INDEX_DOCUMENT'].to_s != "" %>
     index <%= ENV['INDEX_DOCUMENT'] %> index.php index.html index.htm index.xhtml;
     <% else %>
