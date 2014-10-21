@@ -18,7 +18,7 @@ server {
 
     location ~ \.php {
         #fastcgi_pass php;
-	fastcgi_pass server unix:/tmp/php-fpm.api1.sock max_fails=3 fail_timeout=3s;
+	fastcgi_pass server unix:/tmp/php-fpm.api1.sock;
         include fastcgi_params;
         fastcgi_buffers 256 4k;
         fastcgi_index index.php;
@@ -48,7 +48,7 @@ server {
 
     location ~ \.php {
         #fastcgi_pass php;
-	fastcgi_pass server unix:/tmp/php-fpm.api2.sock max_fails=3 fail_timeout=3s;
+	fastcgi_pass server unix:/tmp/php-fpm.api2.sock;
         include fastcgi_params;
         fastcgi_buffers 256 4k;
         fastcgi_index index.php;
