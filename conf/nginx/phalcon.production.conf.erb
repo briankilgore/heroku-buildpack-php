@@ -16,6 +16,13 @@ server {
         return 404;
     }
 
+    location ~ ^/(status|ping)$ {
+        access_log off;
+        include fastcgi_params;
+        #fastcgi_pass unix:/tmp/php-fpm.api1.sock;
+        fastcgi_pass php;
+    }
+
     location ~ \.php {
         fastcgi_pass php;
         #fastcgi_pass unix:/tmp/php-fpm.api1.sock;
