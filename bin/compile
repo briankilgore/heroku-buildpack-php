@@ -436,6 +436,8 @@ mkfifo \$pmsgr
 
 for var in \`env | cut -f1 -d=\`; do
     echo "env[\$var] = \\$\${var}" >> /app/vendor/php/etc/php-fpm.conf
+    echo "env[\$var] = \\$\${var}" >> /app/vendor/php/etc/pool.d/api1.conf
+    echo "env[\$var] = \\$\${var}" >> /app/vendor/php/etc/pool.d/api2.conf
 done
 
 export DOCUMENT_ROOT="$DOCUMENT_ROOT"
