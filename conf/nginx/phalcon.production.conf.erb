@@ -4,7 +4,7 @@ server {
     server_name api1;
     listen <%= ENV['PORT'] %>;
 
-    root /app/api1;
+    root /app/api;
 
     #all other locations try other files first and go to our front controller if none of them exists
     location / {
