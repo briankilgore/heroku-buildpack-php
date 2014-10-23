@@ -478,7 +478,7 @@ touch /app/vendor/php/var/log/error.log
 
 (
     echo "Starting memcached service"
-    exec /app/vendor/memcached/bin/memcached -m 128 -l 0.0.0.0
+    exec /app/vendor/memcached/bin/memcached -m 40 -l 0.0.0.0
 #    \$pmsgr < "memcached"
 )&
 
