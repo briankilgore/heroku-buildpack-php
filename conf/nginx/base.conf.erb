@@ -24,13 +24,13 @@ http {
     }
 
     upstream php-fpm-api1 {
-	server unix:/tmp/php-fpm.api1.sock max_fails=3 fail_timeout=3s;
-	#server 127.0.0.1:9001;
+	#server unix:/tmp/php-fpm.api1.sock max_fails=3 fail_timeout=3s;
+	server 127.0.0.1:9001;
     }
 
     upstream php-fpm-api2 {
-        server unix:/tmp/php-fpm.api2.sock max_fails=3 fail_timeout=3s;
-	#server 127.0.0.1:9002;
+        #server unix:/tmp/php-fpm.api2.sock max_fails=3 fail_timeout=3s;
+	server 127.0.0.1:9002;
     }
 
     <% if ENV.has_key? "INDEX_DOCUMENT" and ENV['INDEX_DOCUMENT'].to_s != "" %>
