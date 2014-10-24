@@ -19,13 +19,11 @@ server {
     location ~ ^/(status|ping)$ {
         access_log off;
         include fastcgi_params;
-        #fastcgi_pass unix:/tmp/php-fpm.api1.sock;
         fastcgi_pass php;
     }
 
     location ~ \.php {
         fastcgi_pass php;
-        #fastcgi_pass unix:/tmp/php-fpm.api1.sock;
         include fastcgi_params;
         fastcgi_buffers 256 4k;
         fastcgi_index index.php;

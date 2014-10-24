@@ -18,8 +18,8 @@ http {
     client_body_timeout 600s;
 
     upstream php {
-        server unix:/tmp/php-fpm.sock max_fails=3 fail_timeout=3s;
-	#server 127.0.0.1:9000;
+        #server unix:/tmp/php-fpm.sock max_fails=3 fail_timeout=3s;
+	server 127.0.0.1:9000;
         #keepalive 16;
     }
 
