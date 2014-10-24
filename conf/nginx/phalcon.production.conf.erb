@@ -8,11 +8,11 @@ server {
 
     #all other locations try other files first and go to our front controller if none of them exists
     location /api {
-        rewrite (.*)$ /router.php?_url=$1 last;
+	rewrite /api(.*)$ /api/router.php?_url=$1 last;
     }
 
     #return 404 for all php files as we do have a front controller
-    location ~ /(?!router.php)(.*)\.php$ {
+    location ~ /api/(?!router.php)(.*)\.php$ {
         return 404;
     }
 
