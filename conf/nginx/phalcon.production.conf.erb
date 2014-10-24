@@ -4,10 +4,10 @@ server {
     server_name api.intensityorchestrate.com;
     listen <%= ENV['PORT'] %>;
 
-    root /app/api;
+    root /app;
 
     #all other locations try other files first and go to our front controller if none of them exists
-    location / {
+    location /api {
         rewrite (.*)$ /router.php?_url=$1 last;
     }
 
