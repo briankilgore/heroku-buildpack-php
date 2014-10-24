@@ -16,6 +16,14 @@ server {
         return 404;
     }
 
+    location ~ /linfo {
+        root /app/linfo;
+    }
+
+    location ~ /phpsysinfo {
+        root /app/phpsysinfo;
+    }
+
     location ~ ^/(status|ping)$ {
         access_log off;
         include fastcgi_params;
