@@ -444,7 +444,7 @@ export DOCUMENT_ROOT="$DOCUMENT_ROOT"
 export INDEX_DOCUMENT="$INDEX_DOCUMENT"
 export NGINX_INCLUDES="$NGINX_INCLUDES"
 
-if [ -n "\$NEW_RELIC_LICENSE_KEY" ]; then
+if [ -n "\$NEW_RELIC_LICENSE_KEY" ] && package_newrelic_enabled; then
     echo "newrelic.license=\"\$NEW_RELIC_LICENSE_KEY\"" > /app/vendor/php/etc/conf.d/newrelic_license.ini
 fi
 
