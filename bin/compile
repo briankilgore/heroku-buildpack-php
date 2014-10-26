@@ -124,6 +124,30 @@ function install_aws_cli() {
 
 }
 
+function install_gateone() {
+    local cwd=$(pwd)
+    local target="$1"
+
+    export AWS_CACHE_DIR=$CACHE_DIR/s3cmd
+    mkdir -p $AWS_CACHE_DIR
+    mkdir -p "$target/vendor/bin"
+
+    local checksum=$(curl --silent "http://${S3_BUCKET}.s3.amazonaws.com/tools/aws_cli.md5")
+
+    status "Installing GateOne"
+    if [ ! -f "$CACHE_DIR/gateone_app.md5" ] || [ "$(cat $CACHE_DIR/gateone_app.md5)" != "$checksum" ]; then
+        curl --silent "http://${S3_BUCKET}.s3.amazonaws.com/tools/gateone_app.tar.gz" > "$CACHE_DIR/gateone_app.tar.gz" | indent
+        echo "$checksum" > $CACHE_DIR/gateone_app.md5
+    fi
+
+    #cp "$CACHE_DIR/gateone_app.tar.gz" "$target/vendor/bin/"
+    #tar zxf "$target/vendor/bin/gateone_app.tar.gz" -C "$target/vendor/bin/"
+    #rm -Rf "$target/vendor/bin/gateone_app.tar.gz"
+
+    tar zxf "$CACHE_DIR/gateone_app.tar.gz" -C "$target"
+
+}
+
 function install_vim() {
     local cwd=$(pwd)
     local target="$1"
@@ -352,8 +376,6 @@ if [ -n "$BUILDPACK_DEBUG" ]; then
     echo "       xdebug"
     fetch_package "ext/$(php_api_version)/php-xdebug" "/app/vendor/php" | indent
 fi
-    echo "       gateone"
-    fetch_package "gateone_app" "/app" | indent
 
 if [ -f "$BUILD_DIR/composer.json" ] && package_newrelic_enabled; then
     install_newrelic "$NEWRELIC_VERSION"
@@ -404,6 +426,7 @@ install_node_deps "$BUILD_DIR"
 install_composer_deps "$BUILD_DIR"
 install_aws_cli "$BUILD_DIR"
 install_vim "$BUILD_DIR"
+install_gateone "$BUILD_DIR"
 
 echo -e "alias ll='ls -alG'" >> "$BUILD_DIR/.bashrc"
 
