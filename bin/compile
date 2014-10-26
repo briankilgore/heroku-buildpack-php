@@ -128,16 +128,17 @@ function install_gateone() {
   local cwd=$(pwd)
   local target="$1"
 
-  curl -L https://pypi.python.org/packages/source/s/setuptools/setuptools-7.0.tar.gz#md5=6245d6752e2ef803c365f560f7f2f940 > /tmp/setuptools-7.0.tar.gz
-  tar zxvf setuptools-7.0.tar.gz -C /tmp
-  cd cd setuptools-7.0
+  curl --silent -L https://pypi.python.org/packages/source/s/setuptools/setuptools-7.0.tar.gz#md5=6245d6752e2ef803c365f560f7f2f940 > "$CACHE_DIR/setuptools-7.0.tar.gz" | indent
+  tar zxvf "$CACHE_DIR/setuptools-7.0.tar.gz" -C $CACHE_DIR
+  cd "$CACHE_DIR/setuptools-7.0"
   export PYTHONPATH="/app/vendor/lib/python2.6/site-packages"
   python setup.py install --prefix=/app/vendor
 
   #aws get bkilgore-heroku-buildpack-php/gateone_src.tar.gz > gateone_src.tar.gz
-  curl --silent "http://${S3_BUCKET}.s3.amazonaws.com/gateone_src.tar.gz" > /tmpgateone_src.tar.gz | indent
-  mkdir /tmp/GateOne
-  tar zxvf gateone_src.tar.gz -C /tmp/GateOne
+  curl --silent "http://${S3_BUCKET}.s3.amazonaws.com/gateone_src.tar.gz" > "$CACHE_DIR/gateone_src.tar.gz" | indent
+  mkdir "$CACHE_DIR/GateOne"
+  tar zxvf "$CACHE_DIR/gateone_src.tar.gz" -C "$CACHE_DIR/GateOne"
+  cd "$CACHE_DIR/GateOne"
   python setup.py install --root=/app/vendor
 }
 
