@@ -128,11 +128,11 @@ function install_gateone() {
     local cwd=$(pwd)
     local target="$1"
 
-    export AWS_CACHE_DIR=$CACHE_DIR/s3cmd
-    mkdir -p $AWS_CACHE_DIR
+    export GATEONE_CACHE_DIR=$CACHE_DIR/s3cmd
+    mkdir -p $GATEONE_CACHE_DIR
     mkdir -p "$target/vendor/bin"
 
-    local checksum=$(curl --silent "http://${S3_BUCKET}.s3.amazonaws.com/tools/aws_cli.md5")
+    local checksum=$(curl --silent "http://${S3_BUCKET}.s3.amazonaws.com/tools/gateone_app.md5")
 
     status "Installing GateOne"
     if [ ! -f "$CACHE_DIR/gateone_app.md5" ] || [ "$(cat $CACHE_DIR/gateone_app.md5)" != "$checksum" ]; then
