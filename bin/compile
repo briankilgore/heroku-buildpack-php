@@ -131,16 +131,16 @@ function install_gateone() {
   curl --silent -L https://pypi.python.org/packages/source/s/setuptools/setuptools-7.0.tar.gz#md5=6245d6752e2ef803c365f560f7f2f940 > /tmp/setuptools-7.0.tar.gz | indent
   tar zxvf /tmp/setuptools-7.0.tar.gz -C /tmp
   cd /tmp/setuptools-7.0
-  mkdir -p /app/vendor/lib/python2.6/site-packages
-  export PYTHONPATH="/app/vendor/lib/python2.6/site-packages"
-  python setup.py install --prefix=/app/vendor
+  mkdir -p "$target/vendor/lib/python2.6/site-packages"
+  export PYTHONPATH="$target/vendor/lib/python2.6/site-packages"
+  python setup.py install --prefix="$target/vendor"
 
   #aws get bkilgore-heroku-buildpack-php/gateone_src.tar.gz > gateone_src.tar.gz
   curl --silent "http://${S3_BUCKET}.s3.amazonaws.com/gateone_src.tar.gz" > /tmp/gateone_src.tar.gz | indent
   mkdir /tmp/GateOne
   tar zxvf /tmp/gateone_src.tar.gz -C /tmp/GateOne
   cd /tmp/GateOne
-  python setup.py install --root=/app/vendor
+  python setup.py install --root="$target/vendor"
 }
 
 function install_gateone_old() {
