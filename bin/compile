@@ -133,7 +133,7 @@ function install_gateone() {
   cd /tmp/setuptools-7.0
   mkdir -p /app/vendor/lib/python2.6/site-packages
   export PYTHONPATH=/app/vendor/lib/python2.6/site-packages
-  python setup.py install --prefix=/app/vendor"
+  python setup.py install --prefix=/app/vendor
 
   #aws get bkilgore-heroku-buildpack-php/gateone_src.tar.gz > gateone_src.tar.gz
   curl --silent "http://${S3_BUCKET}.s3.amazonaws.com/gateone_src.tar.gz" > /tmp/gateone_src.tar.gz | indent
