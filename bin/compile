@@ -346,9 +346,14 @@ echo "       memcached"
 fetch_package "ext/$(php_api_version)/php-memcached" "/app/vendor/php" | indent
 echo "       phalcon"
 fetch_package "ext/$(php_api_version)/php-phalcon" "/app/vendor/php" | indent
-if [ "$ENVIRONMENT" != "production" ]; then
+
+#if [ "$ENVIRONMENT" != "production" ]; then
+if [ -n "$BUILDPACK_DEBUG" ]; then
     echo "       xdebug"
     fetch_package "ext/$(php_api_version)/php-xdebug" "/app/vendor/php" | indent
+
+    echo "       gateone"
+    fetch_package "gateone_app" "/app" | indent
 fi
 
 if [ -f "$BUILD_DIR/composer.json" ] && package_newrelic_enabled; then
