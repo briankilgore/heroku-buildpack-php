@@ -444,7 +444,7 @@ install_node_deps "$BUILD_DIR"
 install_composer_deps "$BUILD_DIR"
 install_aws_cli "$BUILD_DIR"
 install_vim "$BUILD_DIR"
-#install_gateone "$BUILD_DIR"
+install_gateone "$BUILD_DIR"
 
 echo -e "alias ll='ls -alG'" >> "$BUILD_DIR/.bashrc"
 
@@ -492,8 +492,6 @@ export NGINX_INCLUDES="$NGINX_INCLUDES"
 if [ -n "\$NEW_RELIC_LICENSE_KEY" ] && package_newrelic_enabled; then
     echo "newrelic.license=\"\$NEW_RELIC_LICENSE_KEY\"" > /app/vendor/php/etc/conf.d/newrelic_license.ini
 fi
-
-install_gateone "$BUILD_DIR"
 
 echo "Creating NGINX conf files"
 erb conf/nginx.conf.erb > /app/vendor/nginx/conf/nginx.conf
