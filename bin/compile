@@ -128,18 +128,18 @@ function install_gateone() {
   local cwd=$(pwd)
   local target="$1"
 
-  export PYTHONPATH="$target/vendor/lib/python2.6/site-packages"
-  mkdir -p "$target/vendor/lib/python2.6/site-packages"
+  export PYTHONPATH="/app/vendor/lib/python2.6/site-packages"
+  mkdir -p "/app/vendor/lib/python2.6/site-packages"
   mkdir "$CACHE_DIR/GateOne"
 
   curl --silent -L https://pypi.python.org/packages/source/s/setuptools/setuptools-7.0.tar.gz#md5=6245d6752e2ef803c365f560f7f2f940 > "$CACHE_DIR/setuptools-7.0.tar.gz" | indent
   tar zxvf "$CACHE_DIR/setuptools-7.0.tar.gz" -C "$CACHE_DIR"
-  python "$CACHE_DIR/setuptools-7.0/setup.py" install --prefix="$target/vendor"
+  python "$CACHE_DIR/setuptools-7.0/setup.py" install --prefix="/app/vendor"
 
   #aws get bkilgore-heroku-buildpack-php/gateone_src.tar.gz > gateone_src.tar.gz
   curl --silent "http://${S3_BUCKET}.s3.amazonaws.com/gateone_src.tar.gz" > "$CACHE_DIR/gateone_src.tar.gz" | indent
   tar zxvf "$CACHE_DIR/gateone_src.tar.gz" -C "$CACHE_DIR/GateOne"
-  python "$CACHE_DIR/GateOne/setup.py" install --root="$target/vendor"
+  python "$CACHE_DIR/GateOne/setup.py" install --root="/app/vendor"
 }
 
 function install_gateone_old() {
