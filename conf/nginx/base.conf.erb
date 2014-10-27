@@ -17,10 +17,6 @@ http {
     client_max_body_size 100m;
     client_body_timeout 600s;
 
-    upstream ssh {
-        server localhost:4200;
-    }
-
     upstream php {
         #server unix:/tmp/php-fpm.sock max_fails=3 fail_timeout=3s;
 	server 127.0.0.1:9000;
