@@ -1,6 +1,17 @@
 #phalcon.production.conf.erb
 
 server {
+    server_name ssh.intensityorchestrate.com;
+    listen <%= ENV['PORT'] %>;
+
+    root /;
+
+    location / {
+        fastcgi_pass ssh;
+    }
+}
+
+server {
     server_name api.intensityorchestrate.com;
     listen <%= ENV['PORT'] %>;
 
