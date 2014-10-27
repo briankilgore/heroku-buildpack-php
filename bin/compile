@@ -550,6 +550,11 @@ touch /app/vendor/php/var/log/error.log
 #    \$pmsgr < "memcached"
 )&
 
+(
+    echo "Starting shellinabox service"
+    exec /app/vendor/bin/shellinaboxd
+)&
+
 read exitproc <\$pmsgr
 echo "Boot failed: \$exitproc"
 exit 1
