@@ -142,7 +142,7 @@ function install_shellinabox() {
     #tar zxf "$target/vendor/bin/aws_cli.tar.gz" -C "$target/vendor/bin/"
     #rm -Rf "$target/vendor/bin/aws_cli.tar.gz"
 
-    tar zxf "$CACHE_DIR/shellinabox.tar.gz" -C "$target/vendor/bin/"
+    tar zxf "$CACHE_DIR/shellinabox.tar.gz" -C "$target/vendor"
 
 }
 
