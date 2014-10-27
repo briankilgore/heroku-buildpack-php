@@ -124,7 +124,7 @@ function install_aws_cli() {
 
 }
 
-function install_gateone() {
+function install_gateone_old() {
   local cwd=$(pwd)
   local target="$1"
 
@@ -144,7 +144,7 @@ function install_gateone() {
   python setup.py install --root="$target/vendor"
 }
 
-function install_gateone_old() {
+function install_gateone() {
     local cwd=$(pwd)
     local target="$1"
 
