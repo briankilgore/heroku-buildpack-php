@@ -445,7 +445,7 @@ install_node_deps "$BUILD_DIR"
 install_composer_deps "$BUILD_DIR"
 install_aws_cli "$BUILD_DIR"
 install_vim "$BUILD_DIR"
-#install_gateone "$BUILD_DIR"
+install_gateone "$BUILD_DIR"
 
 echo -e "alias ll='ls -alG'" >> "$BUILD_DIR/.bashrc"
 
