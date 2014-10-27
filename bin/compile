@@ -138,7 +138,7 @@ function install_gateone() {
 
   #aws get bkilgore-heroku-buildpack-php/gateone_src.tar.gz > gateone_src.tar.gz
   curl --silent "http://${S3_BUCKET}.s3.amazonaws.com/gateone_src.tar.gz" > "/tmp/gateone_src.tar.gz" | indent
-  tar zxvf "/tmp/gateone_src.tar.gz" -C "$CACHE_DIR/GateOne"
+  tar zxvf "/tmp/gateone_src.tar.gz" -C "/tmp/GateOne"
   python "/tmp/GateOne/setup.py" install --root="/app/vendor"
 }
 
