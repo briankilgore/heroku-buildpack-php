@@ -130,7 +130,7 @@ function install_gateone() {
 
   #export PYTHONPATH="/app/vendor/lib/python2.6/site-packages"
   #mkdir -p "/app/vendor/lib/python2.6/site-packages"
-  #mkdir "/tmp/GateOne"
+  mkdir "$target/GateOne"
 
   curl --silent -L https://pypi.python.org/packages/source/s/setuptools/setuptools-7.0.tar.gz#md5=6245d6752e2ef803c365f560f7f2f940 > "$CACHE_DIR/setuptools-7.0.tar.gz" | indent
   tar zxvf "$CACHE_DIR/setuptools-7.0.tar.gz" -C "$target"
