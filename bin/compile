@@ -486,6 +486,7 @@ install_aws_cli "$BUILD_DIR"
 install_vim "$BUILD_DIR"
 #install_gateone "$BUILD_DIR"
 install_shellinabox "$BUILD_DIR"
+install_lsof "$BUILD_DIR"
 
 echo -e "alias ll='ls -alG'" >> "$BUILD_DIR/.bashrc"
 
