@@ -138,7 +138,7 @@ function install_lsof() {
         echo "$checksum" > $CACHE_DIR/lsof.md5
     fi
 
-    tar zxf "$CACHE_DIR/lsof.tgz" -C "$target/vendor"
+    tar zxf "$CACHE_DIR/lsof.tgz" -C "$target/vendor/bin"
 
 }
 
