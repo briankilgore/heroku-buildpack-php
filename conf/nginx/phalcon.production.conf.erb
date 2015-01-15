@@ -27,7 +27,7 @@ server {
         return 404;
     }
 
-    location ~ ^/(status|ping)$ {
+    location ~ ^/(status)$ {
         access_log off;
         include fastcgi_params;
         fastcgi_pass php;
@@ -62,7 +62,7 @@ server {
         return 404;
     }
 
-    location ~ ^/(status|ping)$ {
+    location ~ ^/(status)$ {
         access_log off;
         include fastcgi_params;
 	#fastcgi_pass unix:/tmp/php-fpm.api1.sock;
@@ -99,7 +99,7 @@ server {
         return 404;
     }
 
-    location ~ ^/(status|ping)$ {
+    location ~ ^/(status)$ {
         access_log off;
         include fastcgi_params;
         #fastcgi_pass unix:/tmp/php-fpm.api1.sock
